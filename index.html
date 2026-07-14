@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ToppsCards.VE - Tienda de Cartas Topps</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#1a1a1a;min-height:100vh}
+a{color:inherit;text-decoration:none}
+header{background:#fff;padding:1rem 2rem;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.08);border-bottom:3px solid #e63946}
+.header-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+.logo{font-size:1.5rem;font-weight:800;color:#e63946;white-space:nowrap}
+.logo span{font-weight:300;font-size:.8rem;display:block;color:#888}
+nav{display:flex;align-items:center;gap:.25rem;flex-wrap:wrap}
+nav a{padding:.4rem .75rem;font-size:.85rem;color:#555;transition:all .2s;border-radius:6px}
+nav a:hover{color:#e63946;background:rgba(230,57,70,.06)}
+nav a.active{color:#fff;background:#e63946}
+.cart-count{background:#e63946;color:#fff;font-size:.7rem;padding:1px 6px;border-radius:10px;vertical-align:top;margin-left:2px}
+.hero{text-align:center;padding:3rem 1rem 2rem;background:linear-gradient(180deg,#fff 0%,#fef2f2 100%)}
+.hero h1{font-size:2.5rem;margin-bottom:.5rem;color:#1a1a1a}
+.hero h1 em{font-style:normal;color:#e63946}
+.hero p{color:#666;font-size:1.1rem}
+.page{max-width:1200px;margin:0 auto;padding:2rem 1rem}
+.page h2{margin-bottom:1.5rem;font-size:1.5rem}
+.catalog-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem}
+.catalog-header h2{font-size:1.5rem;margin-bottom:0}
+.search-bar{display:flex;gap:.5rem}
+.search-bar input{padding:.5rem 1rem;border:1px solid #ddd;border-radius:8px;background:#fff;color:#1a1a1a;font-size:.9rem;width:200px}
+.search-bar input:focus{outline:none;border-color:#e63946}
+.search-bar select{padding:.5rem;border:1px solid #ddd;border-radius:8px;background:#fff;color:#1a1a1a;font-size:.9rem}
+.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.5rem}
+.product-card{background:#fff;border-radius:12px;overflow:hidden;transition:transform .2s,box-shadow .2s;border:1px solid #eee;display:flex;flex-direction:column}
+.product-card:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(230,57,70,.1);border-color:#e63946}
+.product-card img{width:100%;height:220px;object-fit:cover;display:block;background:#f5f5f5}
+.product-card .no-img{width:100%;height:220px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#fef2f2,#fff);color:#ccc;font-size:3rem}
+.product-info{padding:1rem;flex:1;display:flex;flex-direction:column}
+.product-info h3{font-size:1rem;margin-bottom:.25rem;color:#1a1a1a}
+.product-info .set{font-size:.8rem;color:#888;margin-bottom:.25rem}
+.product-info .desc{font-size:.85rem;color:#666;margin-bottom:.75rem;line-height:1.4;flex:1}
+.product-info .footer{display:flex;justify-content:space-between;align-items:center;margin-top:auto}
+.product-info .price{font-size:1.1rem;font-weight:700;color:#e63946}
+.btn{padding:.7rem 1.5rem;border:none;border-radius:8px;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;justify-content:center;gap:.3rem}
+.btn-primary{background:#e63946;color:#fff}
+.btn-primary:hover{background:#c1121f;transform:translateY(-1px)}
+.btn-success{background:#25d366;color:#fff}
+.btn-success:hover{background:#20ba5c;transform:translateY(-1px)}
+.btn-danger{background:#e63946;color:#fff}
+.btn-danger:hover{background:#c1121f}
+.btn-secondary{background:#f0f0f0;color:#333}
+.btn-secondary:hover{background:#ddd}
+.btn-sm{padding:.4rem .8rem;font-size:.8rem}
+.login-form{max-width:360px;margin:4rem auto;background:#fff;padding:2rem;border-radius:12px;border:1px solid #eee}
+.login-form h2{text-align:center;margin-bottom:1.5rem;font-size:1.3rem}
+.login-form label{display:block;font-size:.85rem;color:#666;margin-bottom:.3rem}
+.login-form input[type="password"]{width:100%;padding:.7rem;border:1px solid #ddd;border-radius:8px;background:#fff;color:#1a1a1a;font-size:1rem;margin-bottom:1rem}
+.login-form input:focus{outline:none;border-color:#e63946}
+.admin-layout{display:grid;grid-template-columns:300px 1fr;gap:2rem;align-items:start}
+@media(max-width:768px){.admin-layout{grid-template-columns:1fr}}
+.admin-form{background:#fff;padding:1.5rem;border-radius:12px;border:1px solid #eee;position:sticky;top:90px}
+.admin-form h3{margin-bottom:1rem;font-size:1.1rem;color:#1a1a1a}
+.form-group{margin-bottom:1rem}
+.form-group label{display:block;font-size:.85rem;color:#666;margin-bottom:.3rem}
+.form-group input,.form-group textarea{width:100%;padding:.6rem;border:1px solid #ddd;border-radius:8px;background:#fff;color:#1a1a1a;font-size:.9rem;font-family:inherit}
+.form-group textarea{resize:vertical;min-height:60px}
+.form-group input:focus,.form-group textarea:focus{outline:none;border-color:#e63946}
+.admin-products .product-item{display:flex;align-items:center;gap:1rem;background:#fff;padding:.75rem;border-radius:8px;margin-bottom:.5rem;border:1px solid #eee}
+.admin-products .product-item img{width:50px;height:50px;object-fit:cover;border-radius:6px;background:#f5f5f5}
+.admin-products .product-item .info{flex:1;min-width:0}
+.admin-products .product-item .info h4{font-size:.9rem;margin-bottom:.15rem}
+.admin-products .product-item .info span{font-size:.75rem;color:#888}
+.admin-products .product-item .actions{display:flex;gap:.4rem}
+.admin-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.admin-header h3{margin:0}
+.admin-header .admin-user{display:flex;align-items:center;gap:.75rem;font-size:.85rem;color:#888}
+.cart-item{display:flex;align-items:center;gap:1rem;background:#fff;padding:1rem;border-radius:12px;margin-bottom:.75rem;border:1px solid #eee}
+.cart-item img{width:70px;height:70px;object-fit:cover;border-radius:8px;background:#f5f5f5}
+.cart-img-placeholder{width:70px;height:70px;border-radius:8px;background:linear-gradient(135deg,#fef2f2,#fff);display:flex;align-items:center;justify-content:center;font-size:2rem;color:#ccc;flex-shrink:0}
+.cart-item-info{flex:1;min-width:0}
+.cart-item-info h4{font-size:.95rem;margin-bottom:.15rem}
+.cart-item-set{font-size:.8rem;color:#888;display:block;margin-bottom:.15rem}
+.cart-item-price{font-size:.8rem;color:#e63946}
+.cart-item-qty{display:flex;align-items:center;gap:.5rem}
+.cart-item-qty span{min-width:1.5rem;text-align:center;font-weight:600}
+.cart-item-subtotal{font-weight:700;color:#e63946;min-width:70px;text-align:right}
+.cart-summary{margin-top:1.5rem;background:#fff;padding:1.5rem;border-radius:12px;border:1px solid #eee}
+.cart-total{display:flex;justify-content:space-between;font-size:1.3rem;font-weight:700}
+.cart-total span:last-child{color:#e63946}
+.empty-state{text-align:center;padding:4rem 1rem;color:#888}
+.empty-state h3{font-size:1.3rem;margin-bottom:.5rem}
+.empty-state p{color:#aaa}
+.error-msg{color:#e63946;font-size:.85rem;text-align:center;margin-top:.5rem}
+footer{text-align:center;padding:2rem;color:#888;font-size:.85rem;border-top:1px solid #eee;margin-top:2rem}
+footer a{color:#e63946}
+.toast{position:fixed;bottom:2rem;right:2rem;padding:1rem 1.5rem;border-radius:8px;font-size:.9rem;z-index:999;animation:slideIn .3s ease;max-width:300px}
+.toast.success{background:#dcfce7;border:1px solid #86efac;color:#16a34a}
+.toast.error{background:#fef2f2;border:1px solid #fecaca;color:#dc2626}
+@keyframes slideIn{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.settings-section{border-top:1px solid #eee;padding-top:1rem;margin-top:1rem}
+.settings-section h4{font-size:.9rem;margin-bottom:.75rem;color:#e63946}
+</style>
+</head>
+<body>
+
+<header>
+<div class="header-inner">
+<a href="/" class="logo">TOPPSCARDS.VE <span>Cartas Topps en Venezuela</span></a>
+<nav>
+<a href="#" id="navFilterAll" class="active">Todas las Cajas</a>
+<a href="#" id="navFilterMLB">MLB</a>
+<a href="#" id="navFilterUEFA">UEFA</a>
+<a href="#" id="navFilterNBA">NBA</a>
+<a href="#" id="navCart">Carrito <span id="cartCount" class="cart-count">0</span></a>
+<a href="#" id="navAdmin">Admin</a>
+</nav>
+</div>
+</header>
+
+<section class="hero" id="heroSection">
+<h1>Bienvenido a <em>ToppsCards.VE</em></h1>
+<p>Tu tienda de cartas Topps en Venezuela. Explora y arma tu colecci&oacute;n.</p>
+</section>
+
+<main class="page">
+
+<div id="viewCatalog">
+<div class="catalog-header">
+<h2 id="catalogTitle">Todas las Cajas</h2>
+<div class="search-bar">
+<input type="text" id="searchInput" placeholder="Buscar...">
+<select id="sortSelect">
+<option value="default">Ordenar</option>
+<option value="name">A-Z</option>
+<option value="name-desc">Z-A</option>
+<option value="price-asc">Menor precio</option>
+<option value="price-desc">Mayor precio</option>
+</select>
+</div>
+</div>
+<div class="product-grid" id="productGrid"></div>
+</div>
+
+<div id="viewCart" style="display:none">
+<h2>Tu Carrito</h2>
+<div id="cartContent"></div>
+</div>
+
+<div id="viewAdmin" style="display:none">
+
+<div id="loginView" class="login-form">
+<h2>Acceso Administrativo</h2>
+<form id="loginForm">
+<label for="pass">Contrase&ntilde;a</label>
+<input type="password" id="pass" placeholder="Ingresa la contrase&ntilde;a" required autofocus>
+<button type="submit" class="btn btn-primary">Ingresar</button>
+<div id="loginError" class="error-msg"></div>
+</form>
+</div>
+
+<div id="adminView" style="display:none">
+<div class="admin-layout">
+<div class="admin-form" id="productForm">
+<h3 id="formTitle">Agregar Producto</h3>
+<form id="productFormElem">
+<input type="hidden" id="editId" value="">
+<div class="form-group"><label>Nombre *</label><input type="text" id="name" required></div>
+<div class="form-group"><label>Colecci&oacute;n / Serie</label><input type="text" id="set"></div>
+<div class="form-group"><label>Precio ($) *</label><input type="number" id="price" step="0.01" min="0" required></div>
+<div class="form-group"><label>URL imagen</label><input type="url" id="image"></div>
+<div class="form-group"><label>Descripci&oacute;n / Detalle</label><textarea id="desc"></textarea></div>
+<div style="display:flex;gap:.5rem">
+<button type="submit" class="btn btn-primary" id="submitBtn" style="flex:1">Guardar</button>
+<button type="button" class="btn btn-secondary" id="cancelBtn" style="display:none">Cancelar</button>
+</div>
+</form>
+<div class="settings-section">
+<h4>&#x2699;&#xFE0F; Configuraci&oacute;n</h4>
+<div class="form-group"><label>N&uacute;mero de WhatsApp (con c&oacute;digo de pa&iacute;s)</label>
+<input type="text" id="whatsappInput" placeholder="Ej: 584141234567">
+<button class="btn btn-sm btn-success" id="saveWhatsAppBtn" style="margin-top:.5rem">Guardar WhatsApp</button>
+</div>
+</div>
+</div>
+<div class="admin-products">
+<div class="admin-header">
+<h3>Productos (<span id="productCount">0</span>)</h3>
+<div class="admin-user"><span>&#x1F511; Admin</span><button class="btn btn-sm btn-danger" id="logoutBtn">Salir</button></div>
+</div>
+<div id="productList"></div>
+<p id="adminEmpty" style="text-align:center;color:#555;padding:2rem">No hay productos. &iexcl;Agrega el primero!</p>
+</div>
+</div>
+</div>
+
+</div>
+</main>
+
+<footer>
+<p>&copy; 2026 ToppsCards.VE &mdash; <a href="https://instagram.com/toppscards.ve" target="_blank">@toppscards.ve</a></p>
+</footer>
+
+<script>
+(function(){
+var PROD='toppscards_products',CART='toppscards_cart',WA='toppscards_whatsapp',PASS='123',filter='all';
+function gp(){try{return JSON.parse(localStorage.getItem(PROD))||[]}catch(e){return[]}}
+function sp(p){localStorage.setItem(PROD,JSON.stringify(p))}
+function gc(){try{return JSON.parse(localStorage.getItem(CART))||[]}catch(e){return[]}}
+function sc(c){localStorage.setItem(CART,JSON.stringify(c))}
+function gw(){try{return localStorage.getItem(WA)||''}catch(e){return''}}
+function sw(n){localStorage.setItem(WA,n)}
+function ucc(){var c=gc(),t=0;for(var i=0;i<c.length;i++)t+=c[i].cantidad;var e=document.getElementById('cartCount');if(e)e.textContent=t}
+function sf(f){filter=f;var fl=['all','mlb','uefa','nba'],fn=['navFilterAll','navFilterMLB','navFilterUEFA','navFilterNBA'],tl={all:'Todas las Cajas',mlb:'MLB',uefa:'UEFA',nba:'NBA'};for(var i=0;i<fl.length;i++){var e=document.getElementById(fn[i]);if(e)e.className=fl[i]===f?'active':''}var te=document.getElementById('catalogTitle');if(te)te.textContent=tl[f]||'Todas las Cajas';rc()}
+function sv(v){var vs=['catalog','cart','admin'];for(var i=0;i<vs.length;i++){var x=vs[i];document.getElementById('view'+x.charAt(0).toUpperCase()+x.slice(1)).style.display=x===v?'':'none'}var h=document.getElementById('heroSection');if(h)h.style.display=v==='catalog'?'':'none';if(v==='cart')rCart();if(v==='admin'&&document.getElementById('adminView').style.display!=='none'){rAdmin();document.getElementById('whatsappInput').value=gw()}}
+function atc(id){var c=gc(),f=false;for(var i=0;i<c.length;i++){if(c[i].id===id){c[i].cantidad++;f=true;break}}if(!f)c.push({id:id,cantidad:1});sc(c);ucc();st('Agregado al carrito','success')}
+function cq(id,d){var c=gc();for(var i=0;i<c.length;i++){if(c[i].id===id){c[i].cantidad+=d;if(c[i].cantidad<=0)c.splice(i,1);break}}sc(c);ucc();rCart()}
+function rmc(id){var c=gc();for(var i=0;i<c.length;i++){if(c[i].id===id){c.splice(i,1);break}}sc(c);ucc();rCart();st('Eliminado del carrito','success')}
+function ec(){if(!confirm('Vaciar carrito por completo?'))return;sc([]);ucc();rCart();st('Carrito vaciado','success')}
+function swa(){var n=gw();if(!n){st('Configura el WhatsApp en Admin','error');return}var c=gc(),p=gp();if(!c.length){st('Carrito vacio','error');return}var m='Hola! Quiero hacer este pedido:%0A%0A',t=0;for(var i=0;i<c.length;i++){var it=c[i],pr=null;for(var j=0;j<p.length;j++){if(p[j].id===it.id){pr=p[j];break}}if(!pr)continue;var sb=pr.price*it.cantidad;t+=sb;m+='• '+encodeURIComponent(pr.name)+' x'+it.cantidad+' = $'+sb.toFixed(2)+'%0A'}m+='%0ATotal: $'+t.toFixed(2);window.open('https://wa.me/'+n.replace(/[^0-9]/g,'')+'?text='+m,'_blank')}
+function eh(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+function fp(v){var n=Number(v);return isNaN(n)?v:n.toFixed(2)}
+function fP(p,f){if(f==='all')return true;var s=(p.set||'').toLowerCase();if(f==='mlb')return s.indexOf('mlb')!==-1||s.indexOf('baseball')!==-1;if(f==='uefa')return s.indexOf('uefa')!==-1||s.indexOf('champions')!==-1||s.indexOf('euro')!==-1;if(f==='nba')return s.indexOf('nba')!==-1||s.indexOf('basketball')!==-1;return true}
+function rc(){var g=document.getElementById('productGrid'),st=(document.getElementById('searchInput').value||'').toLowerCase(),sb=document.getElementById('sortSelect').value||'default',p=gp();p=p.filter(function(x){return fP(x,filter)});if(st)p=p.filter(function(x){return x.name.toLowerCase().indexOf(st)!==-1||(x.set||'').toLowerCase().indexOf(st)!==-1||(x.desc||'').toLowerCase().indexOf(st)!==-1});if(sb==='name')p.sort(function(a,b){return a.name.localeCompare(b.name)});else if(sb==='name-desc')p.sort(function(a,b){return b.name.localeCompare(a.name)});else if(sb==='price-asc')p.sort(function(a,b){return(a.price||0)-(b.price||0)});else if(sb==='price-desc')p.sort(function(a,b){return(b.price||0)-(a.price||0)});if(!p.length){g.innerHTML='<div class="empty-state" style="grid-column:1/-1"><h3>No hay productos en esta categor&iacute;a</h3><p>Pronto tendremos m&aacute;s disponibilidad.</p></div>';return}var h='';for(var i=0;i<p.length;i++){var x=p[i],n=eh(x.name),sn=x.set?eh(x.set):'',d=x.desc?eh(x.desc):'',pr=fp(x.price);h+='<div class="product-card">';if(x.image)h+='<img src="'+x.image.replace(/"/g,'&quot;')+'" alt="'+n+'" loading="lazy" onerror="imgF(this)">';else h+='<div class="no-img">&#x1F0CF;</div>';h+='<div class="product-info"><h3>'+n+'</h3>';if(x.set)h+='<div class="set">'+sn+'</div>';if(x.desc)h+='<div class="desc">'+d+'</div>';h+='<div class="footer"><span class="price">$'+pr+'</span><button class="btn btn-sm btn-primary" data-a="'+x.id+'">Agregar</button></div></div></div>'}g.innerHTML=h}
+function rCart(){var ct=document.getElementById('cartContent'),c=gc(),p=gp();if(!c.length){ct.innerHTML='<div class="empty-state"><h3>Carrito vac&iacute;o</h3><p><a href="#" id="goCat" style="color:#e63946">Explora el cat&aacute;logo</a></p></div>';return}var t=0,h='';for(var i=0;i<c.length;i++){var it=c[i],pr=null;for(var j=0;j<p.length;j++){if(p[j].id===it.id){pr=p[j];break}}if(!pr)continue;var sb=pr.price*it.cantidad;t+=sb;var n=eh(pr.name),sn=pr.set?eh(pr.set):'';h+='<div class="cart-item">';if(pr.image)h+='<img src="'+pr.image.replace(/"/g,'&quot;')+'" alt="'+n+'" onerror="imgF(this)">';else h+='<div class="cart-img-placeholder">&#x1F0CF;</div>';h+='<div class="cart-item-info"><h4>'+n+'</h4>';if(pr.set)h+='<span class="cart-item-set">'+sn+'</span>';h+='<span class="cart-item-price">$'+fp(pr.price)+' c/u</span></div>';h+='<div class="cart-item-qty"><button class="btn btn-sm btn-secondary" data-qm="'+pr.id+'">&minus;</button><span>'+it.cantidad+'</span><button class="btn btn-sm btn-secondary" data-qp="'+pr.id+'">+</button></div>';h+='<div class="cart-item-subtotal">$'+fp(sb)+'</div><button class="btn btn-sm btn-danger" data-rm="'+pr.id+'">&times;</button></div>'}h+='<div class="cart-summary"><div class="cart-total"><span>Total:</span><span>$'+fp(t)+'</span></div><button class="btn btn-success" id="waBtn" style="margin-top:1rem;width:100%">&#x1F4AC; Enviar pedido por WhatsApp</button><p style="color:#666;font-size:.8rem;text-align:center;margin-top:.5rem">O cont&aacute;ctanos por Instagram <a href="https://instagram.com/toppscards.ve" style="color:#e63946" target="_blank">@toppscards.ve</a></p><button class="btn btn-danger" id="emptyBtn" style="margin-top:.5rem">Vaciar carrito</button></div>';ct.innerHTML=h}
+function dL(e){e.preventDefault();var p=document.getElementById('pass').value,er=document.getElementById('loginError');if(p===PASS){document.getElementById('loginView').style.display='none';document.getElementById('adminView').style.display='block';er.textContent='';rAdmin();document.getElementById('whatsappInput').value=gw()}else er.textContent='Contrase&ntilde;a incorrecta.'}
+function dLo(){document.getElementById('loginView').style.display='block';document.getElementById('adminView').style.display='none';document.getElementById('pass').value='';document.getElementById('loginError').textContent=''}
+function sP(e){e.preventDefault();var eId=document.getElementById('editId').value,pr={name:document.getElementById('name').value.trim(),set:document.getElementById('set').value.trim(),price:parseFloat(document.getElementById('price').value)||0,image:document.getElementById('image').value.trim(),desc:document.getElementById('desc').value.trim()};if(!pr.name)return;var p=gp();if(eId){for(var i=0;i<p.length;i++){if(p[i].id===eId){p[i].name=pr.name;p[i].set=pr.set;p[i].price=pr.price;p[i].image=pr.image;p[i].desc=pr.desc;break}}st('Actualizado','success')}else{pr.id=Date.now().toString(36)+Math.random().toString(36).slice(2,6);p.push(pr);st('Agregado','success')}sp(p);rAdmin();rF()}
+function eP(id){var p=gp(),pr=null;for(var i=0;i<p.length;i++){if(p[i].id===id){pr=p[i];break}}if(!pr)return;document.getElementById('editId').value=pr.id;document.getElementById('name').value=pr.name||'';document.getElementById('set').value=pr.set||'';document.getElementById('price').value=pr.price||'';document.getElementById('image').value=pr.image||'';document.getElementById('desc').value=pr.desc||'';document.getElementById('formTitle').textContent='Editar Producto';document.getElementById('submitBtn').textContent='Actualizar';document.getElementById('cancelBtn').style.display='block';document.getElementById('productForm').scrollIntoView({behavior:'smooth'})}
+function rF(){document.getElementById('editId').value='';document.getElementById('name').value='';document.getElementById('set').value='';document.getElementById('price').value='';document.getElementById('image').value='';document.getElementById('desc').value='';document.getElementById('formTitle').textContent='Agregar Producto';document.getElementById('submitBtn').textContent='Guardar';document.getElementById('cancelBtn').style.display='none'}
+function dP(id){if(!confirm('Eliminar este producto?'))return;var p=gp();for(var i=0;i<p.length;i++){if(p[i].id===id){p.splice(i,1);break}}sp(p);rAdmin();st('Eliminado','success')}
+function rAdmin(){var p=gp(),l=document.getElementById('productList'),c=document.getElementById('productCount'),e=document.getElementById('adminEmpty');c.textContent=p.length;if(!p.length){l.innerHTML='';e.style.display='block';return}e.style.display='none';var h='';for(var i=0;i<p.length;i++){var x=p[i],n=eh(x.name),sn=x.set?eh(x.set):'',pr=fp(x.price);h+='<div class="product-item">';if(x.image)h+='<img src="'+x.image.replace(/"/g,'&quot;')+'" alt="'+n+'" onerror="imgF(this)">';else h+='<div style="width:50px;height:50px;background:#f5f5f5;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:#ccc">&#x1F0CF;</div>';h+='<div class="info"><h4>'+n+'</h4><span>'+(x.set?sn+' &mdash; ':'')+'$'+pr+'</span></div><div class="actions"><button class="btn btn-sm btn-secondary" data-e="'+x.id+'">&#x270F;&#xFE0F;</button><button class="btn btn-sm btn-danger" data-d="'+x.id+'">&#x1F5D1;&#xFE0F;</button></div></div>'}l.innerHTML=h}
+function imgF(img){var d=document.createElement('div');d.textContent='\uD83C\uDCCF';if(img.parentElement&&img.parentElement.classList.contains('product-card'))d.className='no-img';else if(img.parentElement&&img.parentElement.classList.contains('cart-item'))d.className='cart-img-placeholder';else d.style.cssText='width:50px;height:50px;background:#f5f5f5;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:#ccc';if(img.parentNode)img.parentNode.replaceChild(d,img)}
+function st(m,t){var e=document.querySelector('.toast');if(e)e.remove();var o=document.createElement('div');o.className='toast '+t;o.textContent=m;document.body.appendChild(o);setTimeout(function(){o.remove()},3000)}
+function seed(){if(gp().length)return;sp([{id:'d1',name:'Cristiano Ronaldo 2024',set:'Topps Chrome UEFA',price:25,image:'',desc:'Carta cromada CR7 edici\u00f3n limitada.'},{id:'d2',name:'Lionel Messi 2023',set:'Topps Match Attax',price:18.5,image:'',desc:'Carta del campe\u00f3n del mundo.'},{id:'d3',name:'Kylian Mbapp\u00e9 2024',set:'Topps Chrome UEFA',price:22,image:'',desc:'La estrella francesa en cromo.'},{id:'d4',name:'Vin\u00edcius Jr 2024',set:'Topps Finest',price:30,image:'',desc:'Carta Finest del extremo del Real Madrid.'},{id:'d5',name:'Erling Haaland 2023',set:'Topps Match Attax',price:15,image:'',desc:'El robot noruego en acci\u00f3n.'},{id:'d6',name:'Jude Bellingham 2024',set:'Topps Chrome UEFA',price:28,image:'',desc:'La joven promesa del Real Madrid.'},{id:'d7',name:'Lamine Yamal 2025',set:'Topps Now',price:35,image:'',desc:'Edici\u00f3n especial del fen\u00f3meno del Bar\u00e7a.'},{id:'d8',name:'Neymar Jr 2024',set:'Topps Match Attax',price:12,image:'',desc:'El mago brasile\u00f1o en tu colecci\u00f3n.'},{id:'d9',name:'Shohei Ohtani 2024',set:'Topps MLB Series 1',price:40,image:'',desc:'Carta del fen\u00f3meno japon\u00e9s de Los \u00c1ngeles Dodgers.'},{id:'d10',name:'Aaron Judge 2024',set:'Topps MLB Update',price:22,image:'',desc:'El captain de los Yankees en cromo.'},{id:'d11',name:'Ronald Acu\u00f1a Jr 2024',set:'Topps MLB Series 2',price:18,image:'',desc:'El MVP de la Liga Nacional.'},{id:'d12',name:'LeBron James 2024',set:'Topps NBA Chrome',price:50,image:'',desc:'El rey LeBron en cromo.'},{id:'d13',name:'Stephen Curry 2024',set:'Topps NBA Finest',price:45,image:'',desc:'El mejor tirador de la historia.'},{id:'d14',name:'Victor Wembanyama 2025',set:'Topps NBA Now',price:55,image:'',desc:'La nueva sensaci\u00f3n de la NBA.'}])}
+document.addEventListener('DOMContentLoaded',function(){seed();ucc();rc();document.getElementById('searchInput').addEventListener('input',rc);document.getElementById('sortSelect').addEventListener('change',rc);document.getElementById('navFilterAll').addEventListener('click',function(e){e.preventDefault();sf('all');sv('catalog')});document.getElementById('navFilterMLB').addEventListener('click',function(e){e.preventDefault();sf('mlb');sv('catalog')});document.getElementById('navFilterUEFA').addEventListener('click',function(e){e.preventDefault();sf('uefa');sv('catalog')});document.getElementById('navFilterNBA').addEventListener('click',function(e){e.preventDefault();sf('nba');sv('catalog')});document.getElementById('navCart').addEventListener('click',function(e){e.preventDefault();sv('cart')});document.getElementById('navAdmin').addEventListener('click',function(e){e.preventDefault();sv('admin')});document.getElementById('loginForm').addEventListener('submit',dL);document.getElementById('productFormElem').addEventListener('submit',sP);document.getElementById('cancelBtn').addEventListener('click',rF);document.getElementById('logoutBtn').addEventListener('click',dLo);document.getElementById('saveWhatsAppBtn').addEventListener('click',function(){sw(document.getElementById('whatsappInput').value.trim());st('WhatsApp guardado','success')});document.addEventListener('click',function(e){var t=e.target,add=t.getAttribute('data-a');if(add){atc(add);return}var ed=t.getAttribute('data-e');if(ed){eP(ed);return}var del=t.getAttribute('data-d');if(del){dP(del);return}var qm=t.getAttribute('data-qm');if(qm){cq(qm,-1);return}var qp=t.getAttribute('data-qp');if(qp){cq(qp,1);return}var rm=t.getAttribute('data-rm');if(rm){rmc(rm);return}if(t.id==='emptyBtn'){ec();return}if(t.id==='waBtn'){swa();return}if(t.id==='goCat'){e.preventDefault();sv('catalog');return}})})
+})();
+</script>
+</body>
+</html>
