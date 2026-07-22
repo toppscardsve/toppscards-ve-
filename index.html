@@ -112,7 +112,13 @@ nav a.active{color:#fff;background:#e63946}
 .empty-state h3{font-size:1.3rem;margin-bottom:.5rem}
 .empty-state p{color:#aaa}
 .error-msg{color:#e63946;font-size:.85rem;text-align:center;margin-top:.5rem}
-footer{text-align:center;padding:2rem;color:#888;font-size:.85rem;border-top:1px solid #eee;margin-top:2rem}
+.info-bar{background:#f9f9f9;border-top:1px solid #eee;padding:2rem 1rem;margin-top:2rem}
+.info-bar-inner{max-width:1200px;margin:0 auto;display:flex;gap:2rem;flex-wrap:wrap;justify-content:center}
+.info-block{flex:1;min-width:220px;max-width:320px}
+.info-block h4{font-size:.85rem;font-weight:700;color:#e63946;margin-bottom:.75rem;text-transform:uppercase;letter-spacing:.5px}
+.info-block .info-items{display:flex;flex-wrap:wrap;gap:.5rem}
+.info-tag{display:inline-flex;align-items:center;gap:.35rem;background:#fff;border:1px solid #ddd;border-radius:8px;padding:.35rem .7rem;font-size:.8rem;font-weight:600;color:#333;transition:all .2s}
+footer{text-align:center;padding:2rem;color:#888;font-size:.85rem;border-top:1px solid #eee}
 footer a{color:#e63946}
 .toast{position:fixed;bottom:2rem;right:2rem;padding:1rem 1.5rem;border-radius:8px;font-size:.9rem;z-index:999;animation:slideIn .3s ease;max-width:300px}
 .toast.success{background:#dcfce7;border:1px solid #86efac;color:#16a34a}
@@ -286,6 +292,26 @@ footer a{color:#e63946}
 </div>
 </main>
 
+<div class="info-bar">
+<div class="info-bar-inner">
+<div class="info-block">
+<h4>&#x1F4B3; M&eacute;todos de pago</h4>
+<div class="info-items">
+<span class="info-tag">&#x1F4C8; Binance</span>
+<span class="info-tag">&#x1F4B1; Zelle</span>
+<span class="info-tag">&#x1F4F1; Pago M&oacute;vil</span>
+</div>
+</div>
+<div class="info-block">
+<h4>&#x1F69A; Env&iacute;os</h4>
+<div class="info-items">
+<span class="info-tag">MRW</span>
+<span class="info-tag">Tealca</span>
+<span class="info-tag">Zoom</span>
+</div>
+</div>
+</div>
+</div>
 <footer>
 <p>&copy; 2026 ToppsCards.VE &mdash; <a href="https://instagram.com/toppscards.ve" target="_blank">@toppscards.ve</a></p>
 </footer>
