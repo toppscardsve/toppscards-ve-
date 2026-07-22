@@ -46,8 +46,11 @@ nav a.active{color:#fff;background:#e63946}
 .preventa-info{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;margin:0 auto 1rem;max-width:700px;overflow:hidden}
 .preventa-info-header{background:#fef3c7;padding:.5rem 1rem;font-weight:700;font-size:.85rem;color:#92400e}
 .preventa-info-body{padding:.6rem 1rem;font-size:.8rem;color:#78350f;line-height:1.4}
-.promo-banner{width:100%;overflow:hidden}
-.promo-banner img{width:100%;display:block;max-height:400px;object-fit:cover}
+.promo-banner{width:100%;display:flex;align-items:center;justify-content:flex-start;gap:1.5rem;padding:2rem 2.5rem;min-height:200px;background:linear-gradient(135deg,#e63946 0%,#1a1a1a 100%);color:#fff;overflow:hidden}
+.promo-banner .pb-logo{width:80px;height:80px;filter:brightness(0) invert(1);flex-shrink:0}
+.promo-banner .pb-text{flex:1}
+.promo-banner .pb-text h2{font-size:1.5rem;margin-bottom:.25rem;color:#fff}
+.promo-banner .pb-text p{font-size:.95rem;opacity:.9;color:rgba(255,255,255,.85)}
 .catalog-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem}
 .catalog-header h2{font-size:1.5rem;margin-bottom:0}
 .search-bar{display:flex;gap:.5rem}
@@ -193,7 +196,7 @@ footer a{color:#e63946}
 <p>Tu tienda de cartas Topps en Venezuela. Explora y arma tu colecci&oacute;n.</p>
 </section>
 
-<div class="promo-banner"><img src="https://cdn11.bigcommerce.com/s-dvui11rmsk/images/stencil/1280x1280/products/50916/150987/2026_Topps_Baseball_Series_2_-_Sales_Sheet_page-0001__52805.1780339392.1280.1280__55928.1780339557.jpg?c=1&imbypass=on" alt="Nuevas colecciones" loading="lazy"></div>
+<div class="promo-banner"><img class="pb-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Topps_Logo.svg/3840px-Topps_Logo.svg.png" alt="Topps" loading="lazy"><div class="pb-text"><h2>&iexcl;Nuevas colecciones 2026!</h2><p>Topps Baseball Series 2 y m&aacute;s &mdash; Aparta las tuyas</p></div></div>
 
 <main class="page">
 
