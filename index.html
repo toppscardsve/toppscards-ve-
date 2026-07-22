@@ -34,7 +34,10 @@ nav a{padding:.4rem .75rem;font-size:.85rem;color:#555;transition:all .2s;border
 nav a:hover{color:#e63946;background:rgba(230,57,70,.06)}
 nav a.active{color:#fff;background:#e63946}
 .cart-count{background:#e63946;color:#fff;font-size:.7rem;padding:1px 6px;border-radius:10px;vertical-align:top;margin-left:2px}
-.hero{text-align:center;padding:3rem 1rem 2rem;background:linear-gradient(180deg,#fff 0%,#fef2f2 100%)}
+.hero{text-align:center;padding:3rem 1rem 2rem;position:relative;overflow:hidden;background:linear-gradient(180deg,#fff 0%,#fef2f2 100%)}
+.hero::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Topps_Logo.svg/3840px-Topps_Logo.svg.png');background-size:120px auto;background-repeat:repeat;opacity:.06;animation:drifting 40s linear infinite;pointer-events:none}
+@keyframes drifting{0%{transform:translate(0,0)}100%{transform:translate(-120px,-120px)}}
+.hero h1,.hero p{position:relative;z-index:1}
 .hero h1{font-size:2.5rem;margin-bottom:.5rem;color:#1a1a1a}
 .hero h1 em{font-style:normal;color:#e63946}
 .hero p{color:#666;font-size:1.1rem}
